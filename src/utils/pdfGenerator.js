@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
   },
   foldMark1: {
     top: mmToPt(105),
-    width: mmToPt(3.5),
+    width: mmToPt(8),
   },
   foldMark2: {
     top: mmToPt(200),
-    width: mmToPt(3.5),
+    width: mmToPt(8),
   },
   // Logo top right (Briefkopf at very top of page)
   logoContainer: {
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   // Address Field
   addressField: {
     position: 'absolute',
-    top: mmToPt(45),
+    top: mmToPt(50),
     left: mmToPt(20),
     width: mmToPt(85),
     height: mmToPt(45),
