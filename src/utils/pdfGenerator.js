@@ -1,6 +1,8 @@
 import path from 'path';
 import fs from 'fs';
-import { Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
+import { Document, Page, Text, View, Image, StyleSheet, Font } from '@react-pdf/renderer';
+
+Font.registerHyphenationCallback(word => [word]);
 
 // Helper to convert mm to points (1mm = 2.83464 points)
 const mmToPt = (mm) => mm * 2.83464;
