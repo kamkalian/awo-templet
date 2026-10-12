@@ -445,7 +445,8 @@ const Brief = ({ row, templateConfig, data, year, index, total }) => {
           AWO Oberlar e. V. • Sieglarer Str. 66-68 • 53842 Troisdorf
         </Text>
         <Text style={styles.recipientAddress}>
-          {row.Anrede ? `${row.Anrede} ` : ''}{row.Vorname} {row.Nachname}{"\n"}
+          {row.Anrede ? `${row.Anrede} ` : ''}{"\n"}
+          {row.Vorname} {row.Nachname}{"\n"}
           {row.Straße}{"\n"}
           {row.Postleitzahl} {row.Ort}
         </Text>
