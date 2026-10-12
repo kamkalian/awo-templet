@@ -1,1 +1,0 @@
-# Macht das lokale 'fastapi' zu einem echten Paket, damit 'fastapi.main' importierbar ist.

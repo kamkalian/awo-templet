@@ -11,15 +11,13 @@ Ein moderner, modularer Web-Generator zur Erstellung von DIN-5008-konformen Gebu
 - **Live-Textanpassung**: Betreffzeile und Textabsätze können direkt im Web-Interface vor der PDF-Erstellung live editiert werden.
 - **Benutzerfreundliche Platzhalter**: Automatische Grammatikanpassung (z. B. `[Dir/Ihnen]`, `[Dein/Ihr]`, `[erhältst/erhalten]`) passend zur Briefanrede (Du-Form vs. Sie-Form).
 - **Dynamisches Interface-Branding (Theme Sync)**: Die Benutzeroberfläche passt ihre Farben (z. B. Rot für Geburtstage, Gold für Urkunden) dynamisch an das ausgewählte Template an.
-- **Datenschutz & DSGVO-Konformität**: Automatisches Löschen hochgeladener CSV-Listen und temporärer PDFs direkt nach der Generierung.
-- **Lokale wkhtmltopdf-Erkennung**: Automatischer Suchpfad für standardmäßige Windows-Installationspfade von `wkhtmltopdf.exe`.
 
 ---
 
 ## 🛠️ Technologie-Stack
 
-- **Frontend**: Next.js (React), Tailwind CSS-freie native CSS-Custom-Properties für dynamisches Theme-Branding.
-- **Backend**: FastAPI (Python), Pandas (CSV-Parsing & Encoding-Erkennung), Jinja2 (HTML-Templating), PDFKit / wkhtmltopdf.
+- **Frontend & Backend**: Next.js (React) mit API Routes für CSV-Parsing und PDF-Generierung.
+- **PDF-Rendering**: `@react-pdf/renderer` – vollständig serverseitig, keine externen Dienste.
 - **Containerisierung**: Docker & Docker Compose.
 
 ---
@@ -29,89 +27,37 @@ Ein moderner, modularer Web-Generator zur Erstellung von DIN-5008-konformen Gebu
 ```mermaid
 graph TD
     A[Next.js Web-Interface] -->|1. CSV hochladen & Text anpassen| B[Next.js API Routes]
-    B -->|2. Weiterleitung mit Base64-Parametern| C[FastAPI Backend]
-    C -->|3. Automatische Kodierungsprüfung| D[Pandas Parser]
-    C -->|4. Grammatik-Ersetzung & Jinja-Rendering| E[Jinja2 Engine]
-    C -->|5. HTML-zu-PDF Konvertierung| F[wkhtmltopdf / pdfkit]
-    F -->|6. Rückgabe des PDF-Streams| B
-    B -->|7. PDF-Download im Browser & Dateibereinigung| A
+    B -->|2. CSV-Parsing & Encoding-Erkennung| C[csvParser]
+    B -->|3. Grammatik-Ersetzung & PDF-Rendering| D[@react-pdf/renderer]
+    D -->|4. PDF-Stream| B
+    B -->|5. PDF-Download im Browser| A
 ```
 
 ---
 
-## 🚀 Installation & Lokaler Start
+## 🚀 Installation & Start
 
 ### Voraussetzungen
 - **Node.js** (v18+)
-- **Python** (v3.10+)
-- **wkhtmltopdf** (für PDF-Konvertierung)
-  - [Download wkhtmltopdf](https://wkhtmltopdf.org/downloads.html) und installieren. Unter Windows wird der Pfad automatisch gesucht.
 
 ---
 
-### 💻 Automatische Einrichtung & Start (Empfohlen)
-
-Sie können das gesamte Projekt (Frontend und Backend) mit einem einzigen Befehl starten. Das Skript `run.py` prüft und erstellt automatisch die virtuelle Python-Umgebung, installiert alle Backend- und Frontend-Abhängigkeiten und startet beide Server parallel:
+### 💻 Start (Empfohlen)
 
 ```bash
-python run.py
+npm install
+npm run dev
 ```
 
-Das Frontend ist dann unter `http://localhost:3000` erreichbar, das Backend unter `http://localhost:8000`. Beenden Sie beide Dienste mit `Ctrl + C`.
+Die App ist unter `http://localhost:3000` erreichbar. Beenden mit `Ctrl + C`.
 
 ---
 
-### 🛠️ Manueller Start (Alternativ)
-
-### 1. Backend starten (FastAPI)
-
-1. Navigieren Sie in den Ordner `fast_api`:
-   ```bash
-   cd fast_api
-   ```
-2. Erstellen Sie eine virtuelle Umgebung und aktivieren Sie diese:
-   ```bash
-   python -m venv .venv
-   # Windows:
-   .venv\Scripts\activate
-   # Linux/macOS:
-   source .venv/bin/activate
-   ```
-3. Installieren Sie die Abhängigkeiten:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Starten Sie den FastAPI-Server:
-   ```bash
-   python main.py
-   ```
-   Der Server läuft unter `http://localhost:8000`.
-
----
-
-### 2. Frontend starten (Next.js)
-
-1. Öffnen Sie ein neues Terminal im Hauptverzeichnis des Projekts.
-2. Installieren Sie die NPM-Abhängigkeiten:
-   ```bash
-   npm install
-   ```
-3. Starten Sie den Next.js-Entwicklungsserver:
-   ```bash
-   npm run dev
-   ```
-   Die App ist nun im Browser unter `http://localhost:3000` erreichbar.
-
----
-
-## 🐳 Starten mit Docker (Alternativ)
-
-Wenn Sie Docker installiert haben, können Sie das gesamte System mit einem einzigen Befehl starten:
+### 🐳 Starten mit Docker (Alternativ)
 
 ```bash
 docker-compose up --build
 ```
-Docker Compose startet das Next.js Frontend auf Port `3000` und das FastAPI-Backend auf Port `8000`.
 
 ---
 

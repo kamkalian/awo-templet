@@ -23,8 +23,6 @@ __pycache__/
 
 # FastAPI Temp PDFs & Outputs
 *.pdf
-fast_api/*.pdf
-fast_api/temp_*.pdf
 
 # User Uploaded Data (GDPR Compliance)
 uploads/*
